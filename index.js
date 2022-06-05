@@ -434,7 +434,8 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Backend server is running on port " + PORT);
 });
+const HEROKU_PORT = process.env.HEROKU_PORT || 3001
 
-server.listen(3001, () => {
+server.listen(HEROKU_PORT, () => {
   console.log("Socket io server running");
 });
