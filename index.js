@@ -2,166 +2,10 @@ const express = require("express"); // import the express package
 require("dotenv").config(); // give you access to the .env file
 const app = express(); // fire up the express application
 const cors = require("cors");
-const http = require("http");
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
-
 const mongodb = require("./db/server").main;
 mongodb().then(/* */).catch(console.error);
 
 const client = require("./db/server").client;
-// ...
-
-io.on("connection", (socket) => {
-  socket.on("join_room", (data) => {
-    socket.join(data);
-  });
-  socket.on("getunreadmessages", (data) => {
-    let decryptedId = decryptId(data);
-    const notifications = client
-      .db(process.env.DATABASE)
-      .collection("Notifications");
-    notifications
-      .find({ receiver: decryptedId, read: false })
-      .toArray((err, result) => {
-        if (err) throw err;
-        socket.emit("unreadmessages", result);
-      });
-  });
-  // console.log(`Client with ID of ${socket.id}!`);
-  socket.on("send_notification", (data) => {
-    const notifications = client
-      .db(process.env.DATABASE)
-      .collection("Notifications");
-    data.receiver.forEach((receiver) => {
-      notifications.insertOne(
-        {
-          message: data.message,
-          receiver: receiver,
-          date: data.date,
-          read: data.read,
-        },
-        (err) => {
-          if (err) throw err;
-          notifications
-            .find({ receiver: receiver })
-            .limit(1)
-            .sort({ date: -1 })
-            .toArray((err, result) => {
-              if (err) throw err;
-              result.forEach((message) => {
-                socket
-                  .to(message.receiver)
-                  .emit("receive_notification", message);
-              });
-            });
-        }
-      );
-    });
-  });
-
-  socket.on("send_initialization_message", (data) => {
-    const messageCollection = client
-      .db(process.env.DATABASE)
-      .collection("Messages");
-    messageCollection.insertOne(
-      {
-        message: data.message,
-        sender: data.sender,
-        receiver: data.receiver,
-        date: data.date,
-        readBy: data.readBy,
-      },
-      (err) => {
-        if (err) throw err;
-      }
-    );
-  });
-
-  socket.on("read_all", (data) => {
-    const decryptedId = decryptId(data.encryptedId);
-    const messageCollection = client
-      .db(process.env.DATABASE)
-      .collection("Messages");
-    messageCollection.updateMany(
-      {
-        receiver: data.receiver,
-        readBy: { $ne: decryptedId },
-      },
-      { $push: { readBy: decryptedId } },
-      (err) => {
-        if (err) throw err;
-      }
-    );
-  });
-
-  socket.on("send_message", (data) => {
-    let decryptedId = decryptId(data.id);
-    socket.to(data.receiver).emit("receive_live_message", {
-      message: data.message,
-      sender: data.sender,
-      receiver: data.receiver,
-      date: data.date,
-      readBy: [decryptedId],
-    });
-    const messageCollection = client
-      .db(process.env.DATABASE)
-      .collection("Messages");
-    messageCollection.insertOne(
-      {
-        message: data.message,
-        sender: data.sender,
-        receiver: data.receiver,
-        date: data.date,
-        readBy: [decryptedId],
-      },
-      (err) => {
-        if (err) throw err;
-        let firstname = data.sender.split(" ")[0];
-        let lastname = data.sender.split(" ")[1];
-        const usersCollection = client
-          .db(process.env.DATABASE)
-          .collection("Users");
-        usersCollection.findOne({ firstname, lastname }, (err, result) => {
-          if (err) throw err;
-          let courses = [];
-          for (let i = 0; i < result.courses.length; i++) {
-            courses.push(result.courses[i].identifier);
-          }
-
-          (async function getLastMessages() {
-            const messageCollection = client
-              .db(process.env.DATABASE)
-              .collection("Messages");
-            const aggregatedMessage = messageCollection.aggregate([
-              { $match: { receiver: { $in: courses } } },
-              { $sort: { date: 1 } },
-              {
-                $group: {
-                  _id: "$receiver",
-                  lastMessage: { $last: "$message" },
-                },
-              },
-            ]);
-            const responseArray = [];
-            for await (const doc of aggregatedMessage) {
-              responseArray.push(doc);
-            }
-            socket.to(data.receiver).emit("receive_not_live_message", {
-              data: responseArray,
-              updated: data.receiver,
-            });
-          })();
-        });
-      }
-    );
-  });
-});
 
 // db
 
@@ -426,16 +270,31 @@ app.post("/get_account", (req, res) => {
 
 app.post("/change_password", (req, res) => {
   changePassword(req, res);
-})
+});
+
+app.post("/send_notification", (req, res) => {
+  const notifications = client
+    .db(process.env.DATABASE)
+    .collection("Notifications");
+  req.body.receiver.forEach((receiver) => {
+    notifications.insertOne(
+      {
+        message: req.body.message,
+        receiver: receiver,
+        date: req.body.date,
+        read: req.body.read,
+      },
+      (err) => {
+        if (err) throw err;
+      }
+    );
+  });
+  res.end();
+});
 
 /* My application ends here */
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Backend server is running on port " + PORT);
-});
-const HEROKU_PORT = process.env.HEROKU_PORT || 3001
-
-server.listen(HEROKU_PORT, () => {
-  console.log("Socket io server running");
 });
