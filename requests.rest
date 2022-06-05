@@ -1,5 +1,13 @@
-GET http://localhost:8000/posts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkJ5a2VlIiwiaWQiOjIyLCJpYXQiOjE2NDkzODA3NDh9.ZZeX9OL8T_r9klms5MXYg1qmR9Ucu9xzJh8HG-h-ELM
+POST http://localhost:8000/signup/user
+Content-Type: application/json
+
+{
+  "firstname": "Favour",
+  "lastname": "Olinya",
+  "email": "favourolinya@gmail.com",
+  "phone_number": "08163313512",
+  "password": "favoooo"
+}
 
 ###
 
@@ -7,11 +15,187 @@ POST http://localhost:8000/login
 Content-Type: application/json
 
 {
-  "username": "Ugochukwu",
-  "id": 14
+  "email": "08163313512",
+  "phone_number": "08142906621",
+  "password": "hellrazer"
 }
 
 ###
 
-GET http://localhost:8000/private_exam
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlVnb2NodWt3dSIsImlkIjoxNCwiaWF0IjoxNjQ5MzgyOTE5fQ.vrd0og7IThsfSCU0nhqbNyDiqxCLKTj7IDIkLqNllbM
+POST http://localhost:8000/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjA4MTYzMzEzNTEyIiwicGhvbmVfbnVtYmVyIjoiMDgxNjMzMTM1MTIiLCJwYXNzd29yZCI6ImZhdm9vb28iLCJyb2xlIjoidXNlciIsImlhdCI6MTY1MDQxMjMxMSwiZXhwIjoxNjgxOTY5OTExfQ.66IVJsHze8XLwC919Io8ZZMTCB22S77E2apH30-rMSM"
+}
+
+###
+
+POST http://localhost:8000/token
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjA4MTYzMzEzNTEyIiwicGhvbmVfbnVtYmVyIjoiMDgxNDI5MDY2MjEiLCJwYXNzd29yZCI6ImhlbGxyYXplciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MDU4ODg0NSwiZXhwIjoxNjgyMTQ2NDQ1fQ.N6BLyA4C5mi5rss_N_0YAMnB2sTu2-uK9qUznHfId8Y"
+}
+
+###
+
+POST http://localhost:8000/dashboard
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjA4MTYzMzEzNTEyIiwicGhvbmVfbnVtYmVyIjoiMDgxNjMzMTM1MTIiLCJwYXNzd29yZCI6Ill1Z2VlTWltZXMiLCJyb2xlIjoidXNlciIsImlhdCI6MTY1MDQyMTI2NSwiZXhwIjoxNjUwNDIzMDY1fQ.t0JAUnjoERQsINDtHFNQmgJyi4LeUb-_7l7GybbDxmc
+
+{
+  "email": "08163313512",
+  "phone_number": "08163313512",
+  "password": "YugeeMimes"
+}
+
+###
+
+POST http://localhost:8000/create_exam
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZV9udW1iZXIiOiIwODE0MTI2MjI1MiIsImVtYWlsIjoiMDgxNDEyNjIyNTIiLCJwYXNzd29yZCI6ImNoaW5la2V0ZWQiLCJyb2xlIjoidXNlciIsImlhdCI6MTY0OTc1OTIwNX0.zs4t2nMrcbdTSgXwuLnmbTCJypVOqz-Mx-hsFOeZ3pk
+
+###
+
+POST http://localhost:8000/create_course
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjA4MTYzMzEzNTEyIiwicGhvbmVfbnVtYmVyIjoiMDgxNDI5MDY2MjEiLCJwYXNzd29yZCI6ImhlbGxyYXplciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MDU4ODg3MSwiZXhwIjoxNjUwNTkwNjcxfQ.ShDe0D7o6DSyZgKZsHKYNiU1c3f7tE3R5nnIE_VhiRo
+
+{
+  "title": "Let the fountain flow",
+  "facilitator": "Emeka Ude"
+}
+
+###
+
+POST http://localhost:8000/delete_course
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWY1ZDExNDhkZmY5NmU1OGJkYzc4NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MTkzNTYxNywiZXhwIjoxNjUyMDIyMDE3fQ.Ty5gJ_47xChZ-84q_vmRwQ7p_a5Yx5emPaaYUS--QMU
+
+{
+  
+"title": "Programming Basics",
+"facilitator": "James Olinya Jnr."
+}
+
+###
+
+POST http://localhost:8000/course_enroll
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjA4MTQyOTA2NjIxIiwicGhvbmVfbnVtYmVyIjoiMDgxNDI5MDY2MjEiLCJwYXNzd29yZCI6ImhlbGxyYXplciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MDk5NjI2MSwiZXhwIjoxNjUwOTk4MDYxfQ.aUXIY9jdfyS6TgWBxEXPCOgxjIGqJGrx9X_kKuOkMFs
+
+{
+  "email": "08142906621",
+  "facilitator": "Evelyn Olinya",
+  "password": "hellrazer",
+  "phone_number": "08142906621",
+  "title": "The power of Discipline"
+}
+
+###
+
+POST http://localhost:8000/course_delist
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjA4MTQyOTA2NjIxIiwicGhvbmVfbnVtYmVyIjoiMDgxNDI5MDY2MjEiLCJwYXNzd29yZCI6ImhlbGxyYXplciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY0OTgxNTQzOH0.eKSColdtSPToxqlBSry-TCe48eK9IwOOtvpRUEcOIn8
+
+{
+  "title": "The importance of Discipline",
+  "facilitator": "Evelyn Olinya",
+  "email": "08142906621",
+  "phone_number": "08142906621",
+  "password": "hellrazer"
+}
+
+###
+
+POST http://localhost:8000/modify_course
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzY5ZmU5YjA3MjAxZTNmNzRjZTBmYiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MTk0MTQ5OSwiZXhwIjoxNjUyMDI3ODk5fQ.qR7fkjE6EjO7t0q_ieyVwGSB0BQnRa_M9nzc4lDhcsk
+
+{
+  "title": "The importance of Discipline",
+  "facilitator": "Evelyn Olinya",
+  "id": "eyJhbGciOiJIUzI1NiJ9.NjI3NjlmZTliMDcyMDFlM2Y3NGNlMGZi.Oz7wNBpGXrvzzYbDm3wzpSoiHBqBpj8lsxiPrC31PoE"
+}
+
+###
+
+POST http://localhost:8000/update_course
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjA4MTQyOTA2NjIxIiwicGhvbmVfbnVtYmVyIjoiMDgxNDI5MDY2MjEiLCJwYXNzd29yZCI6ImhlbGxyYXplciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MDkyNjE4MiwiZXhwIjoxNjUwOTI3OTgyfQ.hX74uH3a0H4cEZc5-V5kgQMgbDy2efm_X0UaPC_UhHY
+
+{
+  "title": "The power of Discipline",
+  "facilitator": "Evelyn Olinya",
+  "identifier": "the-power-of-discipline",
+  "modules": [
+    {
+      "title": "Introduction: What is discipline",
+      "video_link": "https://youtube.com/ksdhfdjk",
+      "module_text": "This is some text that is going to be associated herre"
+    },
+    {
+      "title": "Into the matter: Why do we need discipline",
+      "video_link": "https://youtube.com/djkfdgha",
+      "module_text": "We need discipline because..."
+    },
+     {
+      "title": "Into the YHIYTF: Why do we need discipline",
+      "video_link": "https://youtube.com/djkfdgha",
+      "module_text": "We need discipline because..."
+    }
+  ],
+  "deployed": false
+}
+
+###
+
+POST http://localhost:8000/deploy_course
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoaWJ1em9ydWNoZXlhQGdtYWlsLmNvbSIsInBob25lX251bWJlciI6IjA4MTQyMjczMjYxIiwicGFzc3dvcmQiOiJidWJidXMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDk5MjQ5OTN9.eGpECp8X9V7lJ78bU4Nc8ofVzqkbqOddO4qchdZV9cM
+
+{
+  "title": "How to hear from God",
+  "facilitator": "Ndubuisi Ucheya"
+}
+
+###
+
+POST http://localhost:8000/get_deployed_courses
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjA4MTQyOTA2NjIxIiwicGhvbmVfbnVtYmVyIjoiMDgxNDI5MDY2MjEiLCJwYXNzd29yZCI6ImhlbGxyYXplciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MDk3ODM4NywiZXhwIjoxNjUwOTgwMTg3fQ.m0dUY9zXm05KdYgA9FiBAh2BshC45wAD_1reSOwexj4
+
+{
+  "email": "08142906621",
+  "phone_number": "08142906621",
+  "password": "hellrazer"
+}
+
+###
+
+POST http://localhost:8000/encryptId
+Content-Type: application/json
+
+{
+  "id": "627565e185ec3c92fe9eea7b"
+}
+
+###
+
+POST http://localhost:8000/decryptId
+Content-Type: application/json
+
+{
+  "encryptedId": "eyJhbGciOiJIUzI1NiJ9.NjI3NTY1ZTE4NWVjM2M5MmZlOWVlYTdi.yHWe0yWbjr6wpjEJSYaYv01vwXG4Mx-JvScvsEXel_s"
+}
+
+###
+
+POST http://localhost:8000/admin_list
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWY1ZDExNDhkZmY5NmU1OGJkYzc4NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1MjA0NzMzNiwiZXhwIjoxNjUyMTMzNzM2fQ.BhZQPTti4S9U1IscemylftlCakUOXhxOzbGs5m7KlI0
+
+{
+  "id": "eyJhbGciOiJIUzI1NiJ9.NjI1ZjVkMTE0OGRmZjk2ZTU4YmRjNzg0.0z1CnM7dh7MDcyvu98ffBRWHym13iqM9t8RvYL_RDhk"
+}
