@@ -2,11 +2,11 @@
   "name": "su-portal-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon ./src/api.js",
+    "start": "node ./src/api.js"
   },
   "author": "Olinya Ugochukwu Emmanuel",
   "license": "ISC",
@@ -16,6 +16,8 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.5.0",
+    "netlify-lambda": "^2.0.16",
+    "serverless-http": "^3.2.0",
     "socket.io": "^4.5.0"
   },
   "devDependencies": {
