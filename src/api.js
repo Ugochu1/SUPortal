@@ -11,8 +11,14 @@ const client = require("../db/server").client;
 
 // db
 
-app.use("/.netlify/functions/api", router);
-app.use(cors());
+app.use(cors({
+  origin: process.env.ALLOW_ORIGIN || "http://localhost:3000",
+  credentials: true
+}));
+
+app.use(express.json()); // middleware to allow communication using json
+
+app.use("/", router);
 
 const match = require("../db/checkuser");
 const validate = require("../db/validateuser");
@@ -72,8 +78,6 @@ const getAccount = require("../custom_modules/getAccount");
 const changePassword = require("../custom_modules/changePassword");
 
 // custom_modules ends here
-
-app.use(express.json()); // middleware to allow communication using json
 
 /* My application starts here */
 

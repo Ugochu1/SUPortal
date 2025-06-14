@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const client = new MongoClient("mongodb+srv://Yugee_O:ugoMONGODB19@su-portal.zoa3a.mongodb.net/test");
+const client = new MongoClient(process.env.DATABASE_URL);
 
 async function main() {
   await client.connect();
